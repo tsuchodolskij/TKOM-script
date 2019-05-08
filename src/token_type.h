@@ -1,0 +1,59 @@
+#ifndef TOKEN_TYPE_H
+#define TOKEN_TYPE_H
+
+
+enum TokenType {
+
+// alpha
+    INT_TOKEN,
+    FLOAT_TOKEN,
+    STRING_TOKEN,
+    IN_TOKEN,
+    IF_TOKEN,
+    ELSEIF_TOKEN,
+    ELSE_TOKEN,
+    FOR_TOKEN,
+    RETURN_TOKEN,
+    DATAFRAME_TOKEN,
+    ALGORITHM_TOKEN,
+    DECISIONTREE_TOKEN,
+    PROGRAM_TOKEN,
+    FUNCTIONS_TOKEN,
+    BEGIN_TOKEN,
+    END_TOKEN,
+    IDENTIFIER_TOKEN,
+
+// number
+    NUMBER_TOKEN,
+
+// arithmetic operators
+    PLUS_TOKEN,
+    MINUS_TOKEN,
+    MULT_TOKEN,
+    DIV_TOKEN,
+    MOD_TOKEN,
+
+// assigment operator
+    ASSIGN_TOKEN,
+
+// logical operators
+    GREATER_TOKEN,
+    LESS_TOKEN,
+    EQUALS_TOKEN,
+    GREATER_EQ_TOKEN,
+    LESS_EQ_TOKEN,
+    NOT_EQUAL_TOKEN,
+
+// other
+    DOT_TOKEN,
+    LEFT_PAREN_TOKEN,
+    RIGHT_PAREN_TOKEN,
+    LEFT_BRACE_TOKEN,
+    RIGHT_BRACE_TOKEN,
+    SEQUENCE_TOKEN,
+    SEMICOLON_TOKEN,
+    EOF_TOKEN,
+    ERROR_TOKEN
+};
+
+#endif

@@ -1,0 +1,3 @@
+/home/tomas/TKOM/TKOM-script/src/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/tomas/TKOM/TKOM-script/src/cmake-build-debug/CMakeFiles/TKOM.dir
+/home/tomas/TKOM/TKOM-script/src/cmake-build-debug/CMakeFiles/edit_cache.dir

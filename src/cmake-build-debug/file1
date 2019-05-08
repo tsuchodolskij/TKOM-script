@@ -1,0 +1,12 @@
+PROGRAM test1
+FUNCTIONS
+int power(int num) {
+	int x;
+	x = num * num;
+	return x;
+}
+BEGIN
+int number;
+number = 3;
+power(number);
+END

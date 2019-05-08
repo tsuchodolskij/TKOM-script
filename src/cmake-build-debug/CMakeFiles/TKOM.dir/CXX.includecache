@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/tomas/TKOM/TKOM-script/src/scanner.cpp
+iostream
+-
+string
+-
+scanner.h
+/home/tomas/TKOM/TKOM-script/src/scanner.h
+
+/home/tomas/TKOM/TKOM-script/src/scanner.h
+fstream
+-
+token.h
+/home/tomas/TKOM/TKOM-script/src/token.h
+token_type.h
+/home/tomas/TKOM/TKOM-script/src/token_type.h
+source.h
+/home/tomas/TKOM/TKOM-script/src/source.h
+
+/home/tomas/TKOM/TKOM-script/src/source.h
+string
+-
+fstream
+-
+
+/home/tomas/TKOM/TKOM-script/src/token.h
+string
+-
+token_type.h
+/home/tomas/TKOM/TKOM-script/src/token_type.h
+
+/home/tomas/TKOM/TKOM-script/src/token_type.h
+

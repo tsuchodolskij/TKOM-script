@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/TKOM.dir/main.cpp.o CMakeFiles/TKOM.dir/scanner.cpp.o CMakeFiles/TKOM.dir/source.cpp.o CMakeFiles/TKOM.dir/token.cpp.o  -o TKOM 
