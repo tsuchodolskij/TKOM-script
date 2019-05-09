@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctype.h>
-#include "scanner.h"
+#include "lexer.h"
 #include "source.h"
 #include <string>
 
@@ -14,8 +14,8 @@ int main(){
 	cin >> filename;
 
 	Source source_file(filename);
-	Scanner scanner(source_file);
-	scanner.process_file();
+	Lexer lexer(source_file);
+	lexer.process_file();
 
 	return 0;
 }

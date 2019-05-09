@@ -3,12 +3,12 @@
 #include "token_type.h"
 #include "source.h"
 
-#ifndef SCANNER_H
-#define SCANNER_H
+#ifndef LEXER_H
+#define LEXER_H
 
 using namespace std;
 
-class Scanner
+class Lexer
 {
 
 private:
@@ -17,7 +17,7 @@ private:
     Token get_token();
 
 public:
-    explicit Scanner(Source& s);
+    explicit Lexer(Source& s);
     void process_file();
 };
 

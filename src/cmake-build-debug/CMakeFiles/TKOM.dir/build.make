@@ -70,18 +70,18 @@ CMakeFiles/TKOM.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TKOM.dir/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tomas/TKOM/TKOM-script/src/main.cpp -o CMakeFiles/TKOM.dir/main.cpp.s
 
-CMakeFiles/TKOM.dir/scanner.cpp.o: CMakeFiles/TKOM.dir/flags.make
-CMakeFiles/TKOM.dir/scanner.cpp.o: ../scanner.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomas/TKOM/TKOM-script/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/TKOM.dir/scanner.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TKOM.dir/scanner.cpp.o -c /home/tomas/TKOM/TKOM-script/src/scanner.cpp
+CMakeFiles/TKOM.dir/lexer.cpp.o: CMakeFiles/TKOM.dir/flags.make
+CMakeFiles/TKOM.dir/lexer.cpp.o: ../lexer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomas/TKOM/TKOM-script/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/TKOM.dir/lexer.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TKOM.dir/lexer.cpp.o -c /home/tomas/TKOM/TKOM-script/src/lexer.cpp
 
-CMakeFiles/TKOM.dir/scanner.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TKOM.dir/scanner.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tomas/TKOM/TKOM-script/src/scanner.cpp > CMakeFiles/TKOM.dir/scanner.cpp.i
+CMakeFiles/TKOM.dir/lexer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TKOM.dir/lexer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tomas/TKOM/TKOM-script/src/lexer.cpp > CMakeFiles/TKOM.dir/lexer.cpp.i
 
-CMakeFiles/TKOM.dir/scanner.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TKOM.dir/scanner.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tomas/TKOM/TKOM-script/src/scanner.cpp -o CMakeFiles/TKOM.dir/scanner.cpp.s
+CMakeFiles/TKOM.dir/lexer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TKOM.dir/lexer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tomas/TKOM/TKOM-script/src/lexer.cpp -o CMakeFiles/TKOM.dir/lexer.cpp.s
 
 CMakeFiles/TKOM.dir/source.cpp.o: CMakeFiles/TKOM.dir/flags.make
 CMakeFiles/TKOM.dir/source.cpp.o: ../source.cpp
@@ -112,7 +112,7 @@ CMakeFiles/TKOM.dir/token.cpp.s: cmake_force
 # Object files for target TKOM
 TKOM_OBJECTS = \
 "CMakeFiles/TKOM.dir/main.cpp.o" \
-"CMakeFiles/TKOM.dir/scanner.cpp.o" \
+"CMakeFiles/TKOM.dir/lexer.cpp.o" \
 "CMakeFiles/TKOM.dir/source.cpp.o" \
 "CMakeFiles/TKOM.dir/token.cpp.o"
 
@@ -120,7 +120,7 @@ TKOM_OBJECTS = \
 TKOM_EXTERNAL_OBJECTS =
 
 TKOM: CMakeFiles/TKOM.dir/main.cpp.o
-TKOM: CMakeFiles/TKOM.dir/scanner.cpp.o
+TKOM: CMakeFiles/TKOM.dir/lexer.cpp.o
 TKOM: CMakeFiles/TKOM.dir/source.cpp.o
 TKOM: CMakeFiles/TKOM.dir/token.cpp.o
 TKOM: CMakeFiles/TKOM.dir/build.make

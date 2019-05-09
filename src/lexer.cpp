@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
-#include "scanner.h"
+#include "lexer.h"
 
 using namespace std;
 
 
-Scanner::Scanner(Source& s): source(s) {}
+Lexer::Lexer(Source& s): source(s) {}
 
-TokenType Scanner::alphanum_token_type(const string& keyword)
+TokenType Lexer::alphanum_token_type(const string& keyword)
 {
     if (keyword == "int") return INT_TOKEN;
     else if (keyword == "float") return FLOAT_TOKEN;
@@ -28,7 +28,7 @@ TokenType Scanner::alphanum_token_type(const string& keyword)
     else return IDENTIFIER_TOKEN;
 }
 
-Token Scanner::get_token()
+Token Lexer::get_token()
 {
     string s;
     char ch = source.get_current_char();
@@ -199,7 +199,7 @@ Token Scanner::get_token()
 
 }
 
-void Scanner::process_file()
+void Lexer::process_file()
 {
     Token t;
 

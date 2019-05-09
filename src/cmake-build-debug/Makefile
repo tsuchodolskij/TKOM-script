@@ -123,6 +123,33 @@ TKOM/fast:
 	$(MAKE) -f CMakeFiles/TKOM.dir/build.make CMakeFiles/TKOM.dir/build
 .PHONY : TKOM/fast
 
+lexer.o: lexer.cpp.o
+
+.PHONY : lexer.o
+
+# target to build an object file
+lexer.cpp.o:
+	$(MAKE) -f CMakeFiles/TKOM.dir/build.make CMakeFiles/TKOM.dir/lexer.cpp.o
+.PHONY : lexer.cpp.o
+
+lexer.i: lexer.cpp.i
+
+.PHONY : lexer.i
+
+# target to preprocess a source file
+lexer.cpp.i:
+	$(MAKE) -f CMakeFiles/TKOM.dir/build.make CMakeFiles/TKOM.dir/lexer.cpp.i
+.PHONY : lexer.cpp.i
+
+lexer.s: lexer.cpp.s
+
+.PHONY : lexer.s
+
+# target to generate assembly for a file
+lexer.cpp.s:
+	$(MAKE) -f CMakeFiles/TKOM.dir/build.make CMakeFiles/TKOM.dir/lexer.cpp.s
+.PHONY : lexer.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -149,33 +176,6 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) -f CMakeFiles/TKOM.dir/build.make CMakeFiles/TKOM.dir/main.cpp.s
 .PHONY : main.cpp.s
-
-scanner.o: scanner.cpp.o
-
-.PHONY : scanner.o
-
-# target to build an object file
-scanner.cpp.o:
-	$(MAKE) -f CMakeFiles/TKOM.dir/build.make CMakeFiles/TKOM.dir/scanner.cpp.o
-.PHONY : scanner.cpp.o
-
-scanner.i: scanner.cpp.i
-
-.PHONY : scanner.i
-
-# target to preprocess a source file
-scanner.cpp.i:
-	$(MAKE) -f CMakeFiles/TKOM.dir/build.make CMakeFiles/TKOM.dir/scanner.cpp.i
-.PHONY : scanner.cpp.i
-
-scanner.s: scanner.cpp.s
-
-.PHONY : scanner.s
-
-# target to generate assembly for a file
-scanner.cpp.s:
-	$(MAKE) -f CMakeFiles/TKOM.dir/build.make CMakeFiles/TKOM.dir/scanner.cpp.s
-.PHONY : scanner.cpp.s
 
 source.o: source.cpp.o
 
@@ -240,12 +240,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... TKOM"
 	@echo "... edit_cache"
+	@echo "... lexer.o"
+	@echo "... lexer.i"
+	@echo "... lexer.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... scanner.o"
-	@echo "... scanner.i"
-	@echo "... scanner.s"
 	@echo "... source.o"
 	@echo "... source.i"
 	@echo "... source.s"

@@ -6,29 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/tomas/TKOM/TKOM-script/src/main.cpp
-iostream
--
-fstream
--
-ctype.h
--
-scanner.h
-/home/tomas/TKOM/TKOM-script/src/scanner.h
-source.h
-/home/tomas/TKOM/TKOM-script/src/source.h
-string
--
-
-/home/tomas/TKOM/TKOM-script/src/scanner.cpp
+/home/tomas/TKOM/TKOM-script/src/lexer.cpp
 iostream
 -
 string
 -
-scanner.h
-/home/tomas/TKOM/TKOM-script/src/scanner.h
+lexer.h
+/home/tomas/TKOM/TKOM-script/src/lexer.h
 
-/home/tomas/TKOM/TKOM-script/src/scanner.h
+/home/tomas/TKOM/TKOM-script/src/lexer.h
 fstream
 -
 token.h
@@ -38,11 +24,19 @@ token_type.h
 source.h
 /home/tomas/TKOM/TKOM-script/src/source.h
 
-/home/tomas/TKOM/TKOM-script/src/source.cpp
+/home/tomas/TKOM/TKOM-script/src/main.cpp
 iostream
 -
+fstream
+-
+ctype.h
+-
+lexer.h
+/home/tomas/TKOM/TKOM-script/src/lexer.h
 source.h
 /home/tomas/TKOM/TKOM-script/src/source.h
+string
+-
 
 /home/tomas/TKOM/TKOM-script/src/source.h
 string
