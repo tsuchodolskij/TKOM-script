@@ -10,12 +10,12 @@ class Source
 {
 
 private:
+    ifstream f;
     char current_char{};
     unsigned int line{};
     unsigned int column{};
 
 public:
-    ifstream f;
     explicit Source(const string& filename);
     ~Source();
     char get_current_char();
