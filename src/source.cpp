@@ -1,3 +1,4 @@
+#include <iostream>
 #include "source.h"
 
 Source::Source(const string& filename)
@@ -30,6 +31,10 @@ unsigned int Source::get_column()
 
 void Source::consume_char()
 {
+    if (f.peek() == EOF) {
+        this->current_char = EOF;
+        return;
+    }
     f.get(this->current_char);
     this->column++;
     if (this->current_char == '\n') {

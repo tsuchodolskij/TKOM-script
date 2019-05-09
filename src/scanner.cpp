@@ -30,23 +30,23 @@ TokenType Scanner::alphanum_token_type(const string& keyword)
 
 Token Scanner::get_token()
 {
-    char ch;
     string s;
+    char ch = source.get_current_char();
 
-    ch = source.get_current_char();
     while (isspace(ch)) {
         source.consume_char();
         ch = source.get_current_char();
+    }
+
+    if (ch == EOF) {
+        return Token(EOF_TOKEN, "eof", 0, 0);
     }
 
     s = ch;
     unsigned int line = source.get_line();
     unsigned int column = source.get_column();
 
-    if (ch == EOF) {
-        return Token(EOF_TOKEN, s, line, column);
-    }
-    else if (ch == '+') {
+    if (ch == '+') {
         source.consume_char();
         return Token(PLUS_TOKEN, s, line, column);
     }
@@ -203,7 +203,7 @@ void Scanner::process_file()
 {
     Token t;
 
-    while (source.get_current_char() != EOF)
+    while (t.get_type() != EOF_TOKEN)
     {
         t = get_token();
 
