@@ -1,2 +1,7 @@
-DataFrame.acceptMatrix();
-#4123.34
+PROGRAM test1
+FUNCTIONS
+int power(int num) {
+	return x;
+}
+BEGIN
+END

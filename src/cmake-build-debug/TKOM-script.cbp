@@ -93,6 +93,12 @@
 		<Unit filename="/home/tomas/TKOM/TKOM-script/src/main.cpp">
 			<Option target="TKOM"/>
 		</Unit>
+		<Unit filename="/home/tomas/TKOM/TKOM-script/src/parser.cpp">
+			<Option target="TKOM"/>
+		</Unit>
+		<Unit filename="/home/tomas/TKOM/TKOM-script/src/parser.h">
+			<Option target="TKOM"/>
+		</Unit>
 		<Unit filename="/home/tomas/TKOM/TKOM-script/src/source.cpp">
 			<Option target="TKOM"/>
 		</Unit>

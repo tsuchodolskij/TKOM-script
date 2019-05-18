@@ -35,7 +35,23 @@ lexer.h
 /home/tomas/TKOM/TKOM-script/src/lexer.h
 source.h
 /home/tomas/TKOM/TKOM-script/src/source.h
+parser.h
+/home/tomas/TKOM/TKOM-script/src/parser.h
 string
+-
+
+/home/tomas/TKOM/TKOM-script/src/parser.cpp
+iostream
+-
+algorithm
+-
+parser.h
+/home/tomas/TKOM/TKOM-script/src/parser.h
+
+/home/tomas/TKOM/TKOM-script/src/parser.h
+lexer.h
+/home/tomas/TKOM/TKOM-script/src/lexer.h
+list
 -
 
 /home/tomas/TKOM/TKOM-script/src/source.h
@@ -43,6 +59,10 @@ string
 -
 fstream
 -
+
+/home/tomas/TKOM/TKOM-script/src/token.cpp
+token.h
+/home/tomas/TKOM/TKOM-script/src/token.h
 
 /home/tomas/TKOM/TKOM-script/src/token.h
 string

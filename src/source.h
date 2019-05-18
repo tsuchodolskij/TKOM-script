@@ -22,14 +22,6 @@ public:
     unsigned int get_line();
     unsigned int get_column();
     void consume_char();
-
-    // funkcja przewijania bialych znakow
-    // funkcja budujaca alphanum ciag znakow z sourcea
-    // if keyword, dawaj w tokenie string='', inaczej daj string nazwe cala bo to identifier
-    // testy jednostkowe i inne srodowisko
 };
 
 #endif
-
-
-// podzial na metody

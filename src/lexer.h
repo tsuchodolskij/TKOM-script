@@ -14,11 +14,10 @@ class Lexer
 private:
     Source& source;
     static TokenType alphanum_token_type(const string& keyword);
-    Token get_token();
 
 public:
     explicit Lexer(Source& s);
-    void process_file();
+    Token get_token();
 };
 
 #endif

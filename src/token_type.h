@@ -5,55 +5,55 @@
 enum TokenType {
 
 // alpha
-    INT_TOKEN,
-    FLOAT_TOKEN,
-    STRING_TOKEN,
-    IN_TOKEN,
-    IF_TOKEN,
-    ELSEIF_TOKEN,
-    ELSE_TOKEN,
-    FOR_TOKEN,
-    RETURN_TOKEN,
-    DATAFRAME_TOKEN,
-    ALGORITHM_TOKEN,
-    DECISIONTREE_TOKEN,
-    PROGRAM_TOKEN,
-    FUNCTIONS_TOKEN,
-    BEGIN_TOKEN,
-    END_TOKEN,
-    IDENTIFIER_TOKEN,
+    INT_TOKEN, // 0
+    FLOAT_TOKEN, // 1
+    STRING_TOKEN, // 2
+    IN_TOKEN, // 3
+    IF_TOKEN, // 4
+    ELSEIF_TOKEN, // 5
+    ELSE_TOKEN, // 6
+    FOR_TOKEN, // 7
+    RETURN_TOKEN, // 8
+    DATAFRAME_TOKEN, // 9
+    ALGORITHM_TOKEN, // 10
+    DECISIONTREE_TOKEN, // 11
+    PROGRAM_TOKEN, // 12
+    FUNCTIONS_TOKEN, // 13
+    BEGIN_TOKEN, // 14
+    END_TOKEN, // 15
+    IDENTIFIER_TOKEN, // 16
 
 // number
-    NUMBER_TOKEN,
+    NUMBER_TOKEN, // 17
 
 // arithmetic operators
-    PLUS_TOKEN,
-    MINUS_TOKEN,
-    MULT_TOKEN,
-    DIV_TOKEN,
-    MOD_TOKEN,
+    PLUS_TOKEN, // 18
+    MINUS_TOKEN, // 19
+    MULT_TOKEN, // 20
+    DIV_TOKEN, // 21
+    MOD_TOKEN, // 22
 
 // assigment operator
-    ASSIGN_TOKEN,
+    ASSIGN_TOKEN, // 23
 
 // logical operators
-    GREATER_TOKEN,
-    LESS_TOKEN,
-    EQUALS_TOKEN,
-    GREATER_EQ_TOKEN,
-    LESS_EQ_TOKEN,
-    NOT_EQUAL_TOKEN,
+    GREATER_TOKEN, // 24
+    LESS_TOKEN, // 25
+    EQUALS_TOKEN, // 26
+    GREATER_EQ_TOKEN, // 27
+    LESS_EQ_TOKEN, // 28
+    NOT_EQUAL_TOKEN, // 29
 
 // other
-    DOT_TOKEN,
-    LEFT_PAREN_TOKEN,
-    RIGHT_PAREN_TOKEN,
-    LEFT_BRACE_TOKEN,
-    RIGHT_BRACE_TOKEN,
-    SEQUENCE_TOKEN,
-    SEMICOLON_TOKEN,
-    EOF_TOKEN,
-    ERROR_TOKEN
+    DOT_TOKEN, // 30
+    LEFT_PAREN_TOKEN, // 31
+    RIGHT_PAREN_TOKEN, // 32
+    LEFT_BRACE_TOKEN, // 33
+    RIGHT_BRACE_TOKEN, // 34
+    SEQUENCE_TOKEN, // 35
+    SEMICOLON_TOKEN, // 36
+    EOF_TOKEN, // 37
+    ERROR_TOKEN // 38
 };
 
 #endif

@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/TKOM.dir/lexer.cpp.o"
   "CMakeFiles/TKOM.dir/source.cpp.o"
   "CMakeFiles/TKOM.dir/token.cpp.o"
+  "CMakeFiles/TKOM.dir/parser.cpp.o"
   "TKOM.pdb"
   "TKOM"
 )
