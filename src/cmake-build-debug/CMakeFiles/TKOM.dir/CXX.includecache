@@ -6,14 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/tomas/TKOM/TKOM-script/src/lexer.cpp
-iostream
--
-string
--
-lexer.h
-/home/tomas/TKOM/TKOM-script/src/lexer.h
-
 /home/tomas/TKOM/TKOM-script/src/lexer.h
 fstream
 -
@@ -24,23 +16,17 @@ token_type.h
 source.h
 /home/tomas/TKOM/TKOM-script/src/source.h
 
-/home/tomas/TKOM/TKOM-script/src/main.cpp
-iostream
+/home/tomas/TKOM/TKOM-script/src/nodes.h
+vector
 -
-fstream
--
-ctype.h
--
-lexer.h
-/home/tomas/TKOM/TKOM-script/src/lexer.h
-source.h
-/home/tomas/TKOM/TKOM-script/src/source.h
-parser.h
-/home/tomas/TKOM/TKOM-script/src/parser.h
 string
 -
 
 /home/tomas/TKOM/TKOM-script/src/parser.cpp
+utility
+-
+utility
+-
 iostream
 -
 algorithm
@@ -51,6 +37,8 @@ parser.h
 /home/tomas/TKOM/TKOM-script/src/parser.h
 lexer.h
 /home/tomas/TKOM/TKOM-script/src/lexer.h
+nodes.h
+/home/tomas/TKOM/TKOM-script/src/nodes.h
 list
 -
 
@@ -59,10 +47,6 @@ string
 -
 fstream
 -
-
-/home/tomas/TKOM/TKOM-script/src/token.cpp
-token.h
-/home/tomas/TKOM/TKOM-script/src/token.h
 
 /home/tomas/TKOM/TKOM-script/src/token.h
 string

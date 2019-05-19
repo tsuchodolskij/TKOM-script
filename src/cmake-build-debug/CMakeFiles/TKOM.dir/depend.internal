@@ -10,12 +10,14 @@ CMakeFiles/TKOM.dir/lexer.cpp.o
 CMakeFiles/TKOM.dir/main.cpp.o
  /home/tomas/TKOM/TKOM-script/src/lexer.h
  /home/tomas/TKOM/TKOM-script/src/main.cpp
+ /home/tomas/TKOM/TKOM-script/src/nodes.h
  /home/tomas/TKOM/TKOM-script/src/parser.h
  /home/tomas/TKOM/TKOM-script/src/source.h
  /home/tomas/TKOM/TKOM-script/src/token.h
  /home/tomas/TKOM/TKOM-script/src/token_type.h
 CMakeFiles/TKOM.dir/parser.cpp.o
  /home/tomas/TKOM/TKOM-script/src/lexer.h
+ /home/tomas/TKOM/TKOM-script/src/nodes.h
  /home/tomas/TKOM/TKOM-script/src/parser.cpp
  /home/tomas/TKOM/TKOM-script/src/parser.h
  /home/tomas/TKOM/TKOM-script/src/source.h

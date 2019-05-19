@@ -1,7 +1,17 @@
 PROGRAM test1
 FUNCTIONS
-int power(int num) {
+int power(int num, string alpha, int beta) {
+    for var in 1:5 {
+        string a;
+        a = abc;
+    }
+    int x;
 	return x;
 }
 BEGIN
+string x;
+x = 4;
+int a;
+a = 0;
+power(x, a, 6);
 END

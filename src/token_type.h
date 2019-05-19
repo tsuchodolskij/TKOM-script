@@ -46,14 +46,15 @@ enum TokenType {
 
 // other
     DOT_TOKEN, // 30
-    LEFT_PAREN_TOKEN, // 31
-    RIGHT_PAREN_TOKEN, // 32
-    LEFT_BRACE_TOKEN, // 33
-    RIGHT_BRACE_TOKEN, // 34
-    SEQUENCE_TOKEN, // 35
-    SEMICOLON_TOKEN, // 36
-    EOF_TOKEN, // 37
-    ERROR_TOKEN // 38
+    COMMA_TOKEN, // 31
+    LEFT_PAREN_TOKEN, // 32
+    RIGHT_PAREN_TOKEN, // 33
+    LEFT_BRACE_TOKEN, // 34
+    RIGHT_BRACE_TOKEN, // 35
+    SEQUENCE_TOKEN, // 36
+    SEMICOLON_TOKEN, // 37
+    EOF_TOKEN, // 38
+    ERROR_TOKEN // 39
 };
 
 #endif

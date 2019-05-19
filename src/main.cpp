@@ -17,7 +17,7 @@ int main(){
 	Source source_file(filename);
 	Lexer lexer(source_file);
 	Parser parser(lexer);
-	parser.parse_file();
+	parser.program();
 
 	return 0;
 }

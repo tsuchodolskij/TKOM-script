@@ -1,9 +1,14 @@
+#include <utility>
+
+#include <utility>
+
 #include <iostream>
 #include <algorithm>
 #include "parser.h"
 
 Parser::Parser(Lexer& l): lexer(l) {
     token = lexer.get_token();
+    is_buffered = false;
 }
 
 bool Parser::token_included(std::list<TokenType> token_type_list)
@@ -12,18 +17,45 @@ bool Parser::token_included(std::list<TokenType> token_type_list)
     return it != token_type_list.end();
 }
 
+void Parser::read_to_buffer() {
+    buffer = lexer.get_token();
+    is_buffered = true;
+}
+
 void Parser::accept(TokenType token_type) {
     if (token.get_type() == token_type) {
         cout << ">> Otrzymalem oczekiwany token: " << token.get_type() << endl;
+        if (is_buffered) {
+            token = buffer;
+            is_buffered = false;
+        }
+        else {
+            token = lexer.get_token();
+        }
     }
     else {
         cout << "ERROR: Oczekiwalem na: " << token_type << ", a otrzymalem: " << token.get_type() << endl;
     }
-    token = lexer.get_token();
+}
+
+void Parser::accept(TokenType token_type, Node* node) {
+    if(token.get_type() == token_type) {
+        create_node(node);
+        if(is_buffered) {
+            token = buffer;
+            is_buffered = false;
+        }
+        else {
+            token = lexer.get_token();
+        }
+    }
+    else {
+        cout << "ERROR: Oczekiwalem na: " << token_type << ", a otrzymalem: " << token.get_type() << endl;
+    }
 }
 
 void Parser::accept(std::list<TokenType> token_type_list) {
-    if(token_included(token_type_list)) {
+    if(token_included(std::move(token_type_list))) {
         accept(token.get_type());
     }
     else {
@@ -31,149 +63,249 @@ void Parser::accept(std::list<TokenType> token_type_list) {
     }
 }
 
-void Parser::parse_file() {
+void Parser::accept(std::list<TokenType> token_type_list, Node* node) {
+    if(token_included(std::move(token_type_list))) {
+        accept(token.get_type(), node);
+    }
+    else {
+        cout << "ERROR: Otrzymalem: " << token.get_type();
+    }
+}
+
+ProgramNode* Parser::program() {
+
+    auto* node = new ProgramNode();
 
     accept(PROGRAM_TOKEN);
-    accept(IDENTIFIER_TOKEN);
+    accept(IDENTIFIER_TOKEN, node);
     accept(FUNCTIONS_TOKEN);
 
-    functions();
+    while (token.get_type() != BEGIN_TOKEN) {
+        node->functions.push_back(function());
+    }
 
     accept(BEGIN_TOKEN);
 
-    program_statements();
+    while (token.get_type() != END_TOKEN) {
+        node->statements.push_back(statement());
+    }
 
     accept(END_TOKEN);
     accept(EOF_TOKEN);
+
+    return node;
 }
 
-void Parser::functions() {
+FunctionNode* Parser::function() {
 
-    while (token.get_type() != BEGIN_TOKEN) {
-        accept(var_type_token);
-        accept(IDENTIFIER_TOKEN);
-        accept(LEFT_PAREN_TOKEN);
+    auto* node = new FunctionNode();
 
-        function_arguments();
+    accept(var_type_token, node);
+    accept(IDENTIFIER_TOKEN, node);
+    accept(LEFT_PAREN_TOKEN);
 
-        accept(RIGHT_PAREN_TOKEN);
-        accept(LEFT_BRACE_TOKEN);
+    set_function_parameters(node);
 
-        function_statements();
-
-        accept(RETURN_TOKEN);
-        accept(function_return_token);
-        accept(SEMICOLON_TOKEN);
-        accept(RIGHT_BRACE_TOKEN);
-    }
-}
-
-// TODO dać wiele argumentów (dodać COMMA_TOKEN)
-void Parser::function_arguments() {
-    while (token.get_type() != RIGHT_PAREN_TOKEN) {
-        accept(var_type_token);
-        accept(IDENTIFIER_TOKEN);
-    }
-}
-
-void Parser::function_statements() {
-    while (token.get_type() != RETURN_TOKEN) {
-        if (token_included(begin_statement_token)) statement();
-    }
-}
-
-void Parser::program_statements() {
-    while (token.get_type() != END_TOKEN) {
-        while (token_included(begin_statement_token)) statement();
-    }
-}
-
-void Parser::statement() {
-
-    while (!token_included(end_statement_token)) {
-        if (token.get_type() == FOR_TOKEN) {
-            loop();
-        }
-        else if (token.get_type() == IF_TOKEN) {
-            decision();
-        }
-        else if (token_included(simple_type_token)) {
-            declaration();
-        }
-        else if (token.get_type() == DATAFRAME_TOKEN) {
-            assignment();
-        }
-        else if (token.get_type() == DECISIONTREE_TOKEN) {
-            function_call();
-        }
-        else if (token.get_type() == ALGORITHM_TOKEN) {
-            analyze_algorithm_object();
-        }
-        else if (token.get_type() == IDENTIFIER_TOKEN) {
-            accept(IDENTIFIER_TOKEN);
-            if (token.get_type() == ASSIGN_TOKEN) {
-                assignment();
-            }
-            else if (token.get_type() == LEFT_PAREN_TOKEN) {
-                function_call();
-            }
-        }
-    }
-    accept(SEMICOLON_TOKEN);
-}
-
-void Parser::loop() {
-    accept(FOR_TOKEN);
-    accept(IDENTIFIER_TOKEN);
-    accept(IN_TOKEN);
-    accept(NUMBER_TOKEN);
-    accept(SEQUENCE_TOKEN);
-    accept(NUMBER_TOKEN);
+    accept(RIGHT_PAREN_TOKEN);
     accept(LEFT_BRACE_TOKEN);
-    while (token.get_type() != RIGHT_BRACE_TOKEN) {
-        if (token_included(begin_statement_token)) statement();
+
+    while (token.get_type() != RETURN_TOKEN) {
+        node->statements.push_back(statement());
     }
+
+    accept(RETURN_TOKEN);
+    accept(function_return_token);
+    accept(SEMICOLON_TOKEN);
     accept(RIGHT_BRACE_TOKEN);
+
+    return node;
 }
 
-// TODO elseif else
-void Parser::decision() {
+void Parser::set_function_parameters(FunctionNode* node) {
+    if (token.get_type() != RIGHT_PAREN_TOKEN) {
+        accept(var_type_token, node);
+        accept(IDENTIFIER_TOKEN, node);
+        if (token.get_type() == COMMA_TOKEN) {
+            while (token.get_type() != RIGHT_PAREN_TOKEN) {
+                accept(COMMA_TOKEN);
+                accept(var_type_token, node);
+                accept(IDENTIFIER_TOKEN, node);
+            }
+        }
+    }
+}
+
+Node* Parser::statement() {
+
+    Node *node = nullptr;
+
+    if (token.get_type() == FOR_TOKEN) {
+        node = loop();
+    }
+    else if (token.get_type() == IF_TOKEN) {
+        node = decision();
+    }
+    else if (token_included(simple_type_token)) {
+        node = declaration();
+        accept(SEMICOLON_TOKEN);
+    }
+    else if (token.get_type() == DATAFRAME_TOKEN) {
+//            assignment();
+    }
+    else if (token.get_type() == DECISIONTREE_TOKEN) {
+//            function_call();
+    }
+    else if (token.get_type() == ALGORITHM_TOKEN) {
+//            ...
+    }
+    else if (token.get_type() == IDENTIFIER_TOKEN) {
+        read_to_buffer();
+        if (buffer.get_type() == ASSIGN_TOKEN) {
+            node = assignment();
+            accept(SEMICOLON_TOKEN);
+        }
+        else if (buffer.get_type() == LEFT_PAREN_TOKEN) {
+            node = function_call();
+            accept(SEMICOLON_TOKEN);
+        }
+    }
+
+    return node;
+}
+
+LoopNode* Parser::loop() {
+
+    auto* node = new LoopNode();
+
+    accept(FOR_TOKEN);
+    accept(IDENTIFIER_TOKEN, node);
+    accept(IN_TOKEN);
+    accept(NUMBER_TOKEN, node);
+    accept(SEQUENCE_TOKEN);
+    accept(NUMBER_TOKEN, node);
+    accept(LEFT_BRACE_TOKEN);
+
+    while (token.get_type() != RIGHT_BRACE_TOKEN) {
+        node->statements.push_back(statement());
+    }
+
+    accept(RIGHT_BRACE_TOKEN);
+    return node;
+}
+
+// TODO elseif else, logical expression
+DecisionNode* Parser::decision() {
+
+    auto* node = new DecisionNode();
+
     accept(IF_TOKEN);
     accept(LEFT_PAREN_TOKEN);
     /* LOGICAL_EXPRESSION = (IDENTIFIER, INT_NUMBER), LOGICAL_OPERATOR, (IDENTIFIER, INT_NUMBER) */
+    //node->condition = expression();
     accept(RIGHT_PAREN_TOKEN);
+    accept(LEFT_BRACE_TOKEN);
+
+    while (token.get_type() != RIGHT_BRACE_TOKEN) {
+        node->statements.push_back(statement());
+    }
+
+    accept(RIGHT_BRACE_TOKEN);
+
+    return node;
 }
 
-void Parser::declaration() {
-    accept(simple_type_token);
-    accept(IDENTIFIER_TOKEN);
+DeclarationNode* Parser::declaration() {
+
+    auto* node = new DeclarationNode();
+
+    accept(simple_type_token, node);
+    accept(IDENTIFIER_TOKEN, node);
+
+    return node;
 }
 
-// TODO przypisanie do pol obiektow
-// TODO arithmetic operation
-void Parser::assignment() {
-    accept(IDENTIFIER_TOKEN);
+// TODO przypisanie do pol obiektow, expression
+AssignmentNode* Parser::assignment() {
+
+    auto* node = new AssignmentNode();
+
+    accept(IDENTIFIER_TOKEN, node);
     accept(ASSIGN_TOKEN);
-    accept(value_token);
+    accept(value_token, node);
+
+    return node;
 }
 
-// TODO wiecej niz 1 arg
-void Parser::function_call() {
-    accept(IDENTIFIER_TOKEN);
+// TODO dac expression do value_token
+FunctionCallNode* Parser::function_call() {
+
+    auto* node = new FunctionCallNode();
+
+    accept(IDENTIFIER_TOKEN, node);
     accept(LEFT_PAREN_TOKEN);
     if (token.get_type() != RIGHT_PAREN_TOKEN) {
-        accept(value_token);
-    }
-    while (token.get_type() != RIGHT_PAREN_TOKEN) {
-        // wiecej niz 1 arg
+        accept(value_token, node);
+        if(token.get_type() == COMMA_TOKEN) {
+            while (token.get_type() != RIGHT_PAREN_TOKEN) {
+                accept(COMMA_TOKEN);
+                accept(value_token, node);
+            }
+        }
     }
     accept(RIGHT_PAREN_TOKEN);
+
+    return node;
 }
 
-void Parser::analyze_algorithm_object() {
-    accept(ALGORITHM_TOKEN);
-    accept(DOT_TOKEN);
+void Parser::create_node(Node *node) {
 
+    switch (node->node_type) {
+        case PROGRAM_NODE: {
+            auto* theNode = (ProgramNode*) node;
+            if (theNode->program_name.empty()) theNode -> program_name = token.get_value();
+            break;
+        }
+        case FUNCTION_NODE: {
+            auto* theNode = (FunctionNode*) node;
+            if (theNode->type.empty()) theNode->type = token.get_value();
+            else if (theNode->id.empty()) theNode->id = token.get_value();
+            else if (theNode->param_type.empty()) theNode->param_type = token.get_value();
+            else {
+                theNode->parameters.emplace_back(theNode->param_type, token.get_value());
+                theNode->param_type.clear();
+            }
+        }
+        case STATEMENT_NODE: {
+            break;
+        }
+        case LOOP_NODE: {
+            auto* theNode = (LoopNode*) node;
+            if (theNode->id.empty()) theNode->id = token.get_value();
+            else if (theNode->from == -1) theNode->from = stoi(token.get_value());
+            else if (theNode->to == -1) theNode->from = stoi(token.get_value());
+        }
+        case DECISION_NODE: {
+            break;
+        }
+        case DECLARATION_NODE: {
+            auto* theNode = (DeclarationNode*) node;
+            if (theNode->type.empty()) theNode->type = token.get_value();
+            else if (theNode->id.empty()) theNode->id = token.get_value();
+            break;
+        }
+        case ASSIGNMENT_NODE: {
+            auto* theNode = (AssignmentNode*) node;
+            if (theNode->id.empty()) theNode->id = token.get_value();
+            else if (theNode->value.empty()) theNode->value = token.get_value();
+            break;
+        }
+        case FUNCTION_CALL_NODE: {
+            auto* theNode = (FunctionCallNode*) node;
+            if (theNode->id.empty()) theNode->id = token.get_value();
+            break;
+        }
+    }
+    cout << ">> CREATE_NODE value assigned: " << token.get_value() << std::endl;
 }
 
 

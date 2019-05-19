@@ -94,6 +94,10 @@ Token Lexer::get_token()
         source.consume_char();
         return Token(DOT_TOKEN, s, line, column);
     }
+    else if (ch == ',') {
+        source.consume_char();
+        return Token(COMMA_TOKEN, s, line, column);
+    }
 
     else if (ch == '=')
     {
