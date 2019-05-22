@@ -144,7 +144,8 @@ struct DeclarationNode: Node
 struct DecisionNode: Node
 {
     Node* condition{};
-    std::vector<Node*> statements;
+    std::vector<Node*> if_statements;
+    std::vector<Node*> else_statements;
 
     DecisionNode() : Node() {
         node_type = DECISION_NODE;
@@ -153,8 +154,13 @@ struct DecisionNode: Node
     void to_string(std::string tabs) override
     {
         std::cout<<tabs+"<DecisionNode>"<<std::endl;
+        std::cout<<tabs+"condition: "<<std::endl;
         condition->to_string(tabs + "\t\t");
-        for (auto &st : statements)
+        std::cout<<tabs+"if_statements: "<<std::endl;
+        for (auto &st : if_statements)
+            st->to_string(tabs+"\t\t");
+        std::cout<<tabs+"else_statements: "<<std::endl;
+        for (auto &st : else_statements)
             st->to_string(tabs+"\t\t");
         std::cout<<tabs+"</DecisionNode>"<<std::endl;
     }

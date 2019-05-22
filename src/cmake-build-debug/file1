@@ -4,4 +4,12 @@ BEGIN
 if (a * (2 + 2 * 2) % 5 >= 5) {
     return 3 * 3 + 3 + func(a, 3+3);
 }
+else {
+    if (zxc >= ad) {
+        return ad;
+    }
+    else {
+        return zxc;
+    }
+}
 END

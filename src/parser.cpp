@@ -154,7 +154,6 @@ ExpressionNode* Parser::extend(Node* node) {
     return new_node;
 }
 
-// TODO string, dot token
 Node* Parser::lexical_atom() {
 
     Node *node = nullptr;
@@ -165,7 +164,6 @@ Node* Parser::lexical_atom() {
     else if (token.get_type() == IDENTIFIER_TOKEN) {
         read_to_buffer();
         if (buffer.get_type() == LEFT_PAREN_TOKEN) node = function_call();
-        //else if (buffer.get_type() == DOT_TOKEN) node = ALGO_ATTR_EMB_FUN();
         else node = identifier();
     }
 
@@ -251,7 +249,6 @@ void Parser::set_function_parameters(FunctionNode* node) {
     }
 }
 
-// TODO obiekty
 Node* Parser::statement() {
 
     Node *node = nullptr;
@@ -329,7 +326,6 @@ LoopNode* Parser::loop() {
     return node;
 }
 
-// TODO elseif else
 DecisionNode* Parser::decision() {
 
     auto* node = new DecisionNode();
@@ -341,10 +337,20 @@ DecisionNode* Parser::decision() {
     accept(LEFT_BRACE_TOKEN);
 
     while (token.get_type() != RIGHT_BRACE_TOKEN) {
-        node->statements.push_back(statement());
+        node->if_statements.push_back(statement());
     }
 
     accept(RIGHT_BRACE_TOKEN);
+
+    if(token.get_type() == ELSE_TOKEN) {
+        accept(ELSE_TOKEN);
+        accept(LEFT_BRACE_TOKEN);
+        while (token.get_type() != RIGHT_BRACE_TOKEN) {
+            node->else_statements.push_back(statement());
+        }
+
+        accept(RIGHT_BRACE_TOKEN);
+    }
 
     return node;
 }
