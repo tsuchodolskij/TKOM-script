@@ -96,11 +96,130 @@ ProgramNode* Parser::program() {
     return node;
 }
 
+Node* Parser::prioritized_extension() {
+
+    Node* node;
+    node = (token.get_type() == LEFT_PAREN_TOKEN) ? paren_expression() : lexical_atom();
+
+    if(token_included(prioritized_operator_token)) {
+        auto* expr_node = new ExpressionNode();
+        expr_node->left = node;
+        accept(prioritized_operator_token, expr_node);
+        expr_node->right = prioritized_extension();
+        return expr_node;
+    }
+    else {
+        return node;
+    }
+}
+
+Node* Parser::non_prioritized_extension() {
+
+    Node* node;
+    node = (token.get_type() == LEFT_PAREN_TOKEN) ? paren_expression() : lexical_atom();
+
+    ExpressionNode* expr_node = nullptr;
+    if(token_included(non_prioritized_operator_token)) {
+        expr_node = new ExpressionNode();
+        expr_node->left = node;
+        accept(non_prioritized_operator_token, expr_node);
+        expr_node->right = non_prioritized_extension();
+    }
+    else if(token_included(prioritized_operator_token)) {
+        expr_node = new ExpressionNode();
+        expr_node->left = node;
+        accept(prioritized_operator_token, expr_node);
+        expr_node->right = prioritized_extension();
+    }
+    else return node;
+
+    return expr_node;
+}
+
+ExpressionNode* Parser::extend(Node* node) {
+    auto* new_node = new ExpressionNode();
+
+    new_node->left = node;
+    if(token_included(prioritized_operator_token))
+    {
+        accept(prioritized_operator_token, new_node);
+        new_node->right = prioritized_extension();
+    }
+    else if(token_included(non_prioritized_operator_token))
+    {
+        accept(non_prioritized_operator_token, new_node);
+        new_node->right = non_prioritized_extension();
+    }
+
+    return new_node;
+}
+
+// TODO string, dot token
+Node* Parser::lexical_atom() {
+
+    Node *node = nullptr;
+
+    if (token.get_type() == NUMBER_TOKEN || token.get_type() == MINUS_TOKEN) {
+        node = number();
+    }
+    else if (token.get_type() == IDENTIFIER_TOKEN) {
+        read_to_buffer();
+        if (buffer.get_type() == LEFT_PAREN_TOKEN) node = function_call();
+        //else if (buffer.get_type() == DOT_TOKEN) node = ALGO_ATTR_EMB_FUN();
+        else node = identifier();
+    }
+
+    return node;
+}
+
+Node* Parser::paren_expression() {
+
+    accept(LEFT_PAREN_TOKEN);
+
+    Node* node;
+    if(token.get_type() == LEFT_PAREN_TOKEN) {
+        Node* paren_node = paren_expression();
+        ExpressionNode* expresion = extend(paren_node);
+        accept(RIGHT_PAREN_TOKEN);
+        return expresion;
+    }
+
+    node = lexical_atom();
+
+    if(token.get_type() == RIGHT_PAREN_TOKEN) {
+        accept(RIGHT_PAREN_TOKEN);
+        return node;
+    }
+    else {
+        ExpressionNode* expr_node = extend(node);
+        accept(RIGHT_PAREN_TOKEN);
+        return expr_node;
+    }
+}
+
+Node* Parser::expression() {
+
+    Node* node;
+    node = (token.get_type() == LEFT_PAREN_TOKEN) ? paren_expression() : lexical_atom();
+
+    if(token_included(operator_token))
+    {
+        ExpressionNode* expr_node = extend(node);
+
+        while(token_included(operator_token))
+            expr_node = extend(expr_node);
+
+        return expr_node;
+    }
+
+    return node;
+}
+
 FunctionNode* Parser::function() {
 
     auto* node = new FunctionNode();
 
-    accept(var_type_token, node);
+    accept(type_token, node);
     accept(IDENTIFIER_TOKEN, node);
     accept(LEFT_PAREN_TOKEN);
 
@@ -109,13 +228,10 @@ FunctionNode* Parser::function() {
     accept(RIGHT_PAREN_TOKEN);
     accept(LEFT_BRACE_TOKEN);
 
-    while (token.get_type() != RETURN_TOKEN) {
+    while (token.get_type() != RIGHT_BRACE_TOKEN) {
         node->statements.push_back(statement());
     }
 
-    accept(RETURN_TOKEN);
-    accept(function_return_token);
-    accept(SEMICOLON_TOKEN);
     accept(RIGHT_BRACE_TOKEN);
 
     return node;
@@ -135,6 +251,7 @@ void Parser::set_function_parameters(FunctionNode* node) {
     }
 }
 
+// TODO obiekty
 Node* Parser::statement() {
 
     Node *node = nullptr;
@@ -145,30 +262,49 @@ Node* Parser::statement() {
     else if (token.get_type() == IF_TOKEN) {
         node = decision();
     }
-    else if (token_included(simple_type_token)) {
+    else if (token.get_type() == RETURN_TOKEN) {
+        node = function_return();
+    }
+    else if (token_included(var_type_token)) {
         node = declaration();
-        accept(SEMICOLON_TOKEN);
-    }
-    else if (token.get_type() == DATAFRAME_TOKEN) {
-//            assignment();
-    }
-    else if (token.get_type() == DECISIONTREE_TOKEN) {
-//            function_call();
-    }
-    else if (token.get_type() == ALGORITHM_TOKEN) {
-//            ...
     }
     else if (token.get_type() == IDENTIFIER_TOKEN) {
         read_to_buffer();
         if (buffer.get_type() == ASSIGN_TOKEN) {
             node = assignment();
-            accept(SEMICOLON_TOKEN);
         }
         else if (buffer.get_type() == LEFT_PAREN_TOKEN) {
             node = function_call();
             accept(SEMICOLON_TOKEN);
         }
     }
+
+    return node;
+}
+
+IdentifierNode* Parser::identifier() {
+
+    auto* node = new IdentifierNode();
+    accept(IDENTIFIER_TOKEN, node);
+    return node;
+}
+
+NumberNode* Parser::number() {
+
+    auto* node = new NumberNode();
+    if(token.get_type() == MINUS_TOKEN)
+        accept(MINUS_TOKEN, node);
+    accept(NUMBER_TOKEN, node);
+    return node;
+}
+
+ReturnNode* Parser::function_return() {
+
+    auto* node = new ReturnNode();
+
+    accept(RETURN_TOKEN);
+    node->expression = expression();
+    accept(SEMICOLON_TOKEN);
 
     return node;
 }
@@ -193,15 +329,14 @@ LoopNode* Parser::loop() {
     return node;
 }
 
-// TODO elseif else, logical expression
+// TODO elseif else
 DecisionNode* Parser::decision() {
 
     auto* node = new DecisionNode();
 
     accept(IF_TOKEN);
     accept(LEFT_PAREN_TOKEN);
-    /* LOGICAL_EXPRESSION = (IDENTIFIER, INT_NUMBER), LOGICAL_OPERATOR, (IDENTIFIER, INT_NUMBER) */
-    //node->condition = expression();
+    node->condition = expression();
     accept(RIGHT_PAREN_TOKEN);
     accept(LEFT_BRACE_TOKEN);
 
@@ -218,25 +353,25 @@ DeclarationNode* Parser::declaration() {
 
     auto* node = new DeclarationNode();
 
-    accept(simple_type_token, node);
+    accept(var_type_token, node);
     accept(IDENTIFIER_TOKEN, node);
+    accept(SEMICOLON_TOKEN);
 
     return node;
 }
 
-// TODO przypisanie do pol obiektow, expression
 AssignmentNode* Parser::assignment() {
 
     auto* node = new AssignmentNode();
 
     accept(IDENTIFIER_TOKEN, node);
     accept(ASSIGN_TOKEN);
-    accept(value_token, node);
+    node->expression = expression();
+    accept(SEMICOLON_TOKEN);
 
     return node;
 }
 
-// TODO dac expression do value_token
 FunctionCallNode* Parser::function_call() {
 
     auto* node = new FunctionCallNode();
@@ -244,11 +379,11 @@ FunctionCallNode* Parser::function_call() {
     accept(IDENTIFIER_TOKEN, node);
     accept(LEFT_PAREN_TOKEN);
     if (token.get_type() != RIGHT_PAREN_TOKEN) {
-        accept(value_token, node);
+        node->arguments.push_back(expression());
         if(token.get_type() == COMMA_TOKEN) {
             while (token.get_type() != RIGHT_PAREN_TOKEN) {
                 accept(COMMA_TOKEN);
-                accept(value_token, node);
+                node->arguments.push_back(expression());
             }
         }
     }
@@ -271,12 +406,9 @@ void Parser::create_node(Node *node) {
             else if (theNode->id.empty()) theNode->id = token.get_value();
             else if (theNode->param_type.empty()) theNode->param_type = token.get_value();
             else {
-                theNode->parameters.emplace_back(theNode->param_type, token.get_value());
+                theNode->parameters.emplace_back(Parameter(theNode->param_type, token.get_value()));
                 theNode->param_type.clear();
             }
-        }
-        case STATEMENT_NODE: {
-            break;
         }
         case LOOP_NODE: {
             auto* theNode = (LoopNode*) node;
@@ -295,13 +427,31 @@ void Parser::create_node(Node *node) {
         }
         case ASSIGNMENT_NODE: {
             auto* theNode = (AssignmentNode*) node;
-            if (theNode->id.empty()) theNode->id = token.get_value();
-            else if (theNode->value.empty()) theNode->value = token.get_value();
+            theNode->id = token.get_value();
             break;
         }
         case FUNCTION_CALL_NODE: {
             auto* theNode = (FunctionCallNode*) node;
             if (theNode->id.empty()) theNode->id = token.get_value();
+            break;
+        }
+        case EXPRESSION_NODE: {
+            auto* theNode = (ExpressionNode*) node;
+            if (theNode->operation.empty()) theNode->operation = token.get_value();
+            break;
+        }
+        case RETURN_NODE: {
+            break;
+        }
+        case NUMBER_NODE: {
+            auto* theNode = (NumberNode*) node;
+            if (token.get_type() == MINUS_TOKEN) theNode->negative = true;
+            else theNode->value = token.get_value();
+            break;
+        }
+        case IDENTIFIER_NODE: {
+            auto* theNode = (IdentifierNode*) node;
+            theNode->id = token.get_value();
             break;
         }
     }

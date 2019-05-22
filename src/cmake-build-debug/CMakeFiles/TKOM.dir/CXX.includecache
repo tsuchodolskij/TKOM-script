@@ -16,6 +16,22 @@ token_type.h
 source.h
 /home/tomas/TKOM/TKOM-script/src/source.h
 
+/home/tomas/TKOM/TKOM-script/src/main.cpp
+iostream
+-
+fstream
+-
+ctype.h
+-
+lexer.h
+/home/tomas/TKOM/TKOM-script/src/lexer.h
+source.h
+/home/tomas/TKOM/TKOM-script/src/source.h
+parser.h
+/home/tomas/TKOM/TKOM-script/src/parser.h
+string
+-
+
 /home/tomas/TKOM/TKOM-script/src/nodes.h
 vector
 -

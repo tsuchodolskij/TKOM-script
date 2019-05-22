@@ -12,6 +12,7 @@ TokenType Lexer::alphanum_token_type(const string& keyword)
     if (keyword == "int") return INT_TOKEN;
     else if (keyword == "float") return FLOAT_TOKEN;
     else if (keyword == "string") return STRING_TOKEN;
+    else if (keyword == "void") return VOID_TOKEN;
     else if (keyword == "in") return IN_TOKEN;
     else if (keyword == "if") return IF_TOKEN;
     else if (keyword == "elseif") return ELSEIF_TOKEN;
