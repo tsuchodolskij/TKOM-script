@@ -41,9 +41,9 @@ struct IdentifierNode : Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<tabs+"IdentifierNode {"<<std::endl;
-        std::cout<<tabs+" id: "<< id <<std::endl;
-        std::cout<<tabs+"}"<<std::endl;
+        std::cout<<tabs+"<IdentifierNode>"<<std::endl;
+        std::cout<<tabs+"id: "<< id <<std::endl;
+        std::cout<<tabs+"</IdentifierNode>"<<std::endl;
     }
 };
 
@@ -59,10 +59,10 @@ struct NumberNode : Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<tabs+"NumberNode {"<<std::endl;
-        std::cout<<tabs+" negative: "<< negative <<std::endl;
-        std::cout<<tabs+" value: "<< value <<std::endl;
-        std::cout<<tabs+"}"<<std::endl;
+        std::cout<<tabs+"<NumberNode>"<<std::endl;
+        std::cout<<tabs+"negative: "<< negative <<std::endl;
+        std::cout<<tabs+"value: "<< value <<std::endl;
+        std::cout<<tabs+"</NumberNode>"<<std::endl;
     }
 };
 
@@ -78,11 +78,11 @@ struct ExpressionNode : Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<tabs+"ExpressionNode {"<<std::endl;
-        std::cout<<tabs+" operation: "<< operation <<std::endl;
-        left->to_string(tabs+"\t");
-        right->to_string(tabs+"\t");
-        std::cout<<tabs+"}"<<std::endl;
+        std::cout<<tabs+"<ExpressionNode>"<<std::endl;
+        std::cout<<tabs+"operation: "<< operation <<std::endl;
+        left->to_string(tabs+"\t\t");
+        right->to_string(tabs+"\t\t");
+        std::cout<<tabs+"</ExpressionNode>"<<std::endl;
     }
 };
 
@@ -97,11 +97,11 @@ struct FunctionCallNode: Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<tabs+"FunctionCallNode {"<<std::endl;
-        std::cout<<tabs+" id: "<< id <<std::endl;
+        std::cout<<tabs+"<FunctionCallNode>"<<std::endl;
+        std::cout<<tabs+"id: "<< id <<std::endl;
         for (auto &arg : arguments)
-            arg->to_string(tabs+"\t");
-        std::cout<<tabs+"}"<<std::endl;
+            arg->to_string(tabs+"\t\t");
+        std::cout<<tabs+"</FunctionCallNode>"<<std::endl;
     }
 };
 
@@ -116,10 +116,10 @@ struct AssignmentNode: Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<tabs+"AssignmentNode {"<<std::endl;
-        std::cout<<tabs+" id: "<< id <<std::endl;
-        expression->to_string(tabs + "\t");
-        std::cout<<tabs+"}"<<std::endl;
+        std::cout<<tabs+"<AssignmentNode>"<<std::endl;
+        std::cout<<tabs+"id: "<< id <<std::endl;
+        expression->to_string(tabs + "\t\t");
+        std::cout<<tabs+"</AssignmentNode>"<<std::endl;
     }
 };
 
@@ -134,10 +134,10 @@ struct DeclarationNode: Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<tabs+"DeclarationNode {"<<std::endl;
-        std::cout<<tabs+" type: "<< type <<std::endl;
-        std::cout<<tabs+" id: "<< id <<std::endl;
-        std::cout<<tabs+"}"<<std::endl;
+        std::cout<<tabs+"<DeclarationNode>"<<std::endl;
+        std::cout<<tabs+"type: "<< type <<std::endl;
+        std::cout<<tabs+"id: "<< id <<std::endl;
+        std::cout<<tabs+"</DeclarationNode>"<<std::endl;
     }
 };
 
@@ -152,11 +152,11 @@ struct DecisionNode: Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<tabs+"DecisionNode {"<<std::endl;
-        condition->to_string(tabs + "\t");
+        std::cout<<tabs+"<DecisionNode>"<<std::endl;
+        condition->to_string(tabs + "\t\t");
         for (auto &st : statements)
-            st->to_string(tabs+"\t");
-        std::cout<<tabs+"}"<<std::endl;
+            st->to_string(tabs+"\t\t");
+        std::cout<<tabs+"</DecisionNode>"<<std::endl;
     }
 };
 
@@ -175,13 +175,13 @@ struct LoopNode : Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<tabs+"LoopNode {"<<std::endl;
-        std::cout<<tabs+" id: "<< id <<std::endl;
-        std::cout<<tabs+" from: "<< from <<std::endl;
-        std::cout<<tabs+" to: "<< to <<std::endl;
+        std::cout<<tabs+"<LoopNode>"<<std::endl;
+        std::cout<<tabs+"id: "<< id <<std::endl;
+        std::cout<<tabs+"from: "<< from <<std::endl;
+        std::cout<<tabs+"to: "<< to <<std::endl;
         for (auto &st : statements)
-            st->to_string(tabs+"\t");
-        std::cout<<tabs+"}"<<std::endl;
+            st->to_string(tabs+"\t\t");
+        std::cout<<tabs+"</LoopNode>"<<std::endl;
     }
 };
 
@@ -196,9 +196,9 @@ struct ReturnNode : Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<tabs+"ReturnNode {"<<std::endl;
-        expression->to_string(tabs+"\t");
-        std::cout<<tabs+"}"<<std::endl;
+        std::cout<<tabs+"<ReturnNode>"<<std::endl;
+        expression->to_string(tabs+"\t\t");
+        std::cout<<tabs+"</ReturnNode>"<<std::endl;
     }
 };
 
@@ -216,17 +216,17 @@ struct FunctionNode : Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<tabs+"FunctionNode {"<<std::endl;
-        std::cout<<tabs+" type: "<<type<<std::endl;
-        std::cout<<tabs+" id: "<<id<<std::endl;
-        std::cout<<tabs+"Parameters: "<<std::endl;
+        std::cout<<tabs+"<FunctionNode>"<<std::endl;
+        std::cout<<tabs+"type: "<<type<<std::endl;
+        std::cout<<tabs+"id: "<<id<<std::endl;
+        std::cout<<tabs+"parameters: "<<std::endl;
         for (auto &par : parameters)
             std::cout<<tabs+" "<< par.type<<" "<<par.id<<std::endl;
-        std::cout<<tabs+"Statements: "<<std::endl;
+        std::cout<<tabs+"statements: "<<std::endl;
         for (auto &st : statements)
-            st->to_string(tabs+"\t");
+            st->to_string(tabs+"\t\t");
 
-        std::cout<<tabs+"}"<<std::endl;
+        std::cout<<tabs+"<FunctionNode>"<<std::endl;
     }
 };
 
@@ -242,15 +242,15 @@ struct ProgramNode : Node
 
     void to_string(std::string tabs) override
     {
-        std::cout<<"ProgramNode {"<<std::endl;
-        std::cout<<tabs+" program_name: "<<program_name<<std::endl;
-        std::cout<<tabs+"Functions: "<<std::endl;
+        std::cout<<"<ProgramNode>"<<std::endl;
+        std::cout<<tabs+"program_name: "<<program_name<<std::endl;
+        std::cout<<tabs+"functions: "<<std::endl;
         for (auto &fun : functions)
-            fun->to_string(tabs + "\t");
-        std::cout<<tabs+"Statements: "<<std::endl;
+            fun->to_string(tabs + "\t\t");
+        std::cout<<tabs+"statements: "<<std::endl;
         for (auto &st : statements)
-            st->to_string(tabs + "\t");
-        std::cout<<"}"<<std::endl;
+            st->to_string(tabs + "\t\t");
+        std::cout<<"</ProgramNode>"<<std::endl;
     }
 };
 
