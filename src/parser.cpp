@@ -274,6 +274,15 @@ Node* Parser::statement() {
             node = function_call();
             accept(SEMICOLON_TOKEN);
         }
+        else if (buffer.get_type() == DOT_TOKEN) {
+            accept(IDENTIFIER_TOKEN);
+            accept(DOT_TOKEN);
+            read_to_buffer();
+            if (buffer.get_type() == LEFT_PAREN_TOKEN) {
+                node = function_call();
+                accept(SEMICOLON_TOKEN);
+            }
+        }
     }
 
     return node;

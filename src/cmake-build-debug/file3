@@ -1,9 +1,13 @@
-int counter;
-counter = 1;
-repeat {
-	print(counter);
-	counter = counter + 1;
-	if (counter > 3) {
-		break;
-	}
+PROGRAM test1
+FUNCTIONS
+void fun1() {
+
 }
+void fun2(string a, string b, int c) {
+    b = c;
+    return a + b * 2;
+}
+BEGIN
+    fun1();
+    fun2(1,2,3);
+END
