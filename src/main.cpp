@@ -4,6 +4,7 @@
 #include "lexer.h"
 #include "source.h"
 #include "parser.h"
+#include "interpreter.h"
 #include <string>
 
 using namespace std;
@@ -17,8 +18,8 @@ int main(){
 	Source source_file(filename);
 	Lexer lexer(source_file);
 	Parser parser(lexer);
-    ProgramNode* node = parser.program();
-    node->to_string("");
+    Interpreter interpreter(parser);
+    interpreter.execute();
 
 	return 0;
 }

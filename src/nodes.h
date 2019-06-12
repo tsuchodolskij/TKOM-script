@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 
 enum NodeType
@@ -238,7 +239,7 @@ struct FunctionNode : Node
 
 struct ProgramNode : Node
 {
-    string program_name;
+    std::string program_name;
     std::vector<FunctionNode*> functions;
     std::vector<Node*> statements;
 

@@ -424,12 +424,14 @@ void Parser::create_node(Node *node) {
                 theNode->parameters.emplace_back(Parameter(theNode->param_type, token.get_value()));
                 theNode->param_type.clear();
             }
+            break;
         }
         case LOOP_NODE: {
             auto* theNode = (LoopNode*) node;
             if (theNode->id.empty()) theNode->id = token.get_value();
             else if (theNode->from == -1) theNode->from = stoi(token.get_value());
-            else if (theNode->to == -1) theNode->from = stoi(token.get_value());
+            else if (theNode->to == -1) theNode->to = stoi(token.get_value());
+            break;
         }
         case DECISION_NODE: {
             break;
@@ -472,162 +474,3 @@ void Parser::create_node(Node *node) {
     }
     cout << ">> CREATE_NODE value assigned: " << token.get_value() << std::endl;
 }
-
-
-
-
-
-
-
-/*
-Token t;
-
-while (t.get_type() != EOF_TOKEN) {
-    t = lexer.get_token();
-
-    switch (t.get_type()) {
-
-        case INT_TOKEN:
-            cout << "INT_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case FLOAT_TOKEN:
-            cout << "FLOAT_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case STRING_TOKEN:
-            cout << "STRING_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case NUMBER_TOKEN:
-            cout << "NUMBER_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case IN_TOKEN:
-            cout << "IN_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case IF_TOKEN:
-            cout << "IF_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case ELSEIF_TOKEN:
-            cout << "ELSEIF_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case ELSE_TOKEN:
-            cout << "ELSE_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case FOR_TOKEN:
-            cout << "FOR_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case RETURN_TOKEN:
-            cout << "RETURN_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case DATAFRAME_TOKEN:
-            cout << "DATAFRAME_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case ALGORITHM_TOKEN:
-            cout << "ALGORITHM_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case DECISIONTREE_TOKEN:
-            cout << "DECISIONTREE_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case PROGRAM_TOKEN:
-            cout << "PROGRAM_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case FUNCTIONS_TOKEN:
-            cout << "FUNCTIONS_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case BEGIN_TOKEN:
-            cout << "BEGIN_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case END_TOKEN:
-            cout << "END_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case IDENTIFIER_TOKEN:
-            cout << "IDENTIFIER_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-
-        case PLUS_TOKEN:
-            cout << "PLUS_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case MINUS_TOKEN:
-            cout << "MINUS_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case MULT_TOKEN:
-            cout << "MULT_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case DIV_TOKEN:
-            cout << "DIV_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case MOD_TOKEN:
-            cout << "MOD_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-
-        case ASSIGN_TOKEN:
-            cout << "ASSIGN_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-
-        case GREATER_TOKEN:
-            cout << "GREATER_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case LESS_TOKEN:
-            cout << "LESS_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case EQUALS_TOKEN:
-            cout << "EQUALS_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case GREATER_EQ_TOKEN:
-            cout << "GREATER_EQ_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case LESS_EQ_TOKEN:
-            cout << "LESS_EQ_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case NOT_EQUAL_TOKEN:
-            cout << "NOT_EQUAL_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-
-        case DOT_TOKEN:
-            cout << "DOT_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case LEFT_PAREN_TOKEN:
-            cout << "LEFT_PAREN_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case RIGHT_PAREN_TOKEN:
-            cout << "RIGHT_PAREN_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case LEFT_BRACE_TOKEN:
-            cout << "LEFT_BRACE_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case RIGHT_BRACE_TOKEN:
-            cout << "RIGHT_BRACE_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case SEQUENCE_TOKEN:
-            cout << "SEQUENCE_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case SEMICOLON_TOKEN:
-            cout << "SEMICOLON_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-        case EOF_TOKEN:
-            cout << "EOF_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        case ERROR_TOKEN:
-            cout << "ERROR_TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column() << endl;
-            break;
-        default:
-            cout << "UNRECOGNIZED TOKEN : " << t.get_value() << "\t\t\t" << t.get_line() << ":" << t.get_column()
-                 << endl;
-            break;
-
-    }
-}*/
