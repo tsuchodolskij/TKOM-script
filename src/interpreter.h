@@ -86,6 +86,14 @@ public:
     void run_printer(FunctionCallNode *pNode);
 
     MemoryElement* call_int_function(FunctionCallNode* node);
+
+    void run_read_data(FunctionCallNode *pNode);
+
+    void run_alg_run(FunctionCallNode *pNode);
+
+    void run_tree_draw(FunctionCallNode *pNode);
+
+    bool invalid_object_argument(FunctionCallNode *pNode, std::string type);
 };
 
 

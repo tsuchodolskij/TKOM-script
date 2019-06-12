@@ -32,8 +32,6 @@ void Interpreter::process_function(FunctionNode *pNode) {
 
 void Interpreter::add_function_desc(FunctionNode *pNode) {
     functions[pNode->id] = FunctionDesc(pNode->type, pNode->parameters, pNode->statements);
-    // TODO
-    //symbols_array.push_back(emb_symbols_array);
 }
 
 void Interpreter::process_statement(Node *pNode) {
@@ -118,6 +116,21 @@ void Interpreter::process_assignment(AssignmentNode *pNode) {
 void Interpreter::process_function_call(FunctionCallNode *pNode) {
     if (pNode->id == "print") {
         run_printer(pNode);
+        return;
+    }
+
+    if (pNode->id == "readData") {
+        run_read_data(pNode);
+        return;
+    }
+
+    if (pNode->id == "run") {
+        run_alg_run(pNode);
+        return;
+    }
+
+    if (pNode->id == "draw") {
+        run_tree_draw(pNode);
         return;
     }
 
@@ -306,3 +319,43 @@ void Interpreter::run_printer(FunctionCallNode *pNode) {
     std::cout << ">> " << getExpressionValue(pNode->arguments[0])->value << endl;
 }
 
+void Interpreter::run_read_data(FunctionCallNode *pNode) {
+    if (!pNode->arguments.empty()) {
+        std::cout << "niepoprawna ilosc argumentow w setData" << std::endl;
+        return;
+    }
+    std::cout << ">> Data has been set" << endl;
+}
+
+void Interpreter::run_alg_run(FunctionCallNode *pNode) {
+    if (pNode->arguments.size() != 1) {
+        std::cout << "niepoprawny argument w run" << std::endl;
+        return;
+    }
+    std::cout << ">> Algorithm has run successfully" << endl;
+}
+
+void Interpreter::run_tree_draw(FunctionCallNode *pNode) {
+    if (pNode->arguments.size() != 1) {
+        std::cout << "niepoprawny argument w draw" << std::endl;
+        return;
+    }
+    std::cout << ">> Tree has been drawn successfully" << endl;
+}
+
+bool Interpreter::invalid_object_argument(FunctionCallNode *pNode, std::string type) {
+
+    int mapIndex = symbols.size() - 1;
+    while (mapIndex >= 0) {
+        MemoryElement* element = getExpressionValue(pNode->arguments[0])->varType;
+        if (symbols[mapIndex].count(getExpressionValue(pNode->arguments[0])->value) != 0) break;
+        mapIndex--;
+    }
+    if (mapIndex == -1) {
+        std::cout << "nie ma takiej zmiennej" << std::endl;
+        return true;
+    }
+    else {
+        return symbols[mapIndex].find(pNode->id)->second.type != type;
+    }
+}
